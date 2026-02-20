@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fintrix/common/appbar.dart';
 import 'package:fintrix/common/upload_image.dart';
 import 'package:fintrix/screen/query_detail.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -33,18 +34,37 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
   // 🎙 Start Recording
   Future<void> _startRecording() async {
     if (await _recorder.hasPermission()) {
-      await _recorder.start(const RecordConfig(), path: '');
+      if (kIsWeb) {
+        await _recorder.start(const RecordConfig(), path: '');
+      } else {
+        await _recorder.start(const RecordConfig(), path: 'recorded_audio.m4a');
+      }
 
       setState(() {
         _isRecording = true;
         _seconds = 0;
       });
 
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() => _seconds++);
-      });
+      _timer = Timer.periodic(
+        const Duration(seconds: 1),
+        (timer) => setState(() => _seconds++),
+      );
     }
   }
+  // Future<void> _startRecording() async {
+  //   if (await _recorder.hasPermission()) {
+  //     await _recorder.start(const RecordConfig(), path: '');
+
+  //     setState(() {
+  //       _isRecording = true;
+  //       _seconds = 0;
+  //     });
+
+  //     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //       setState(() => _seconds++);
+  //     });
+  //   }
+  // }
 
   // ⏹ Stop Recording
   Future<void> _stopRecording() async {
@@ -53,11 +73,24 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
 
     setState(() {
       _isRecording = false;
-      _audioPath = path;
+      _audioPath = path; // ✅ Save recording
+      _textMessage = null; // ✅ Now properly saved
     });
+
+    print("Recorded path: $_audioPath");
   }
+  // Future<void> _stopRecording() async {
+  //   final path = await _recorder.stop();
+  //   _timer?.cancel();
+
+  //   setState(() {
+  //     _isRecording = false;
+  //     _audioPath = path;
+  //   });
+  // }
 
   // ▶ Play / Pause Audio
+
   Future<void> _togglePlay() async {
     if (_audioPath == null) return;
 
@@ -65,7 +98,12 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
       await _player.stop();
       setState(() => _isPlaying = false);
     } else {
-      await _player.play(DeviceFileSource(_audioPath!));
+      if (kIsWeb) {
+        await _player.play(UrlSource(_audioPath!));
+      } else {
+        await _player.play(DeviceFileSource(_audioPath!));
+      }
+
       setState(() => _isPlaying = true);
 
       _player.onPlayerComplete.listen((event) {
@@ -73,6 +111,21 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
       });
     }
   }
+  // Future<void> _togglePlay() async {
+  //   if (_audioPath == null) return;
+
+  //   if (_isPlaying) {
+  //     await _player.stop();
+  //     setState(() => _isPlaying = false);
+  //   } else {
+  //     await _player.play(DeviceFileSource(_audioPath!));
+  //     setState(() => _isPlaying = true);
+
+  //     _player.onPlayerComplete.listen((event) {
+  //       setState(() => _isPlaying = false);
+  //     });
+  //   }
+  // }
 
   String _formatTime(int seconds) {
     final mins = seconds ~/ 60;
@@ -448,6 +501,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
       ),
       child: Row(
         children: [
+          /// ▶ Play Button
           IconButton(
             onPressed: _togglePlay,
             icon: Icon(
@@ -456,12 +510,55 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
               color: Colors.green,
             ),
           ),
+
           const SizedBox(width: 10),
-          const Text("Voice Message"),
+
+          const Expanded(
+            child: Text("Voice Message", style: TextStyle(fontSize: 15)),
+          ),
+
+          /// ❌ Delete Button
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: () async {
+              await _player.stop();
+              _timer?.cancel();
+
+              setState(() {
+                _audioPath = null; // ❗ Remove recording
+                _isPlaying = false;
+                _isRecording = false;
+              });
+            },
+          ),
         ],
       ),
     );
   }
+
+  // Widget _buildVoiceCard() {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+  //     decoration: BoxDecoration(
+  //       color: const Color(0xffF1F3F6),
+  //       borderRadius: BorderRadius.circular(12),
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         IconButton(
+  //           onPressed: _togglePlay,
+  //           icon: Icon(
+  //             _isPlaying ? Icons.pause_circle : Icons.play_circle,
+  //             size: 32,
+  //             color: Colors.green,
+  //           ),
+  //         ),
+  //         const SizedBox(width: 10),
+  //         const Text("Voice Message"),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildInputCard() {
     return Container(
@@ -503,8 +600,12 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
                   onPressed: () {
                     setState(() {
                       _textMessage = _controller.text.trim();
-                      _isEditing = false; // FIRST turn off edit mode
-                      _controller.clear(); // THEN clear controller
+                      _audioPath = null; // ❗ Clear recording
+                      _isEditing = false;
+                      _controller.clear();
+                      // _textMessage = _controller.text.trim();
+                      // _isEditing = false; // FIRST turn off edit mode
+                      // _controller.clear(); // THEN clear controller
                     });
                   },
                 )
