@@ -184,7 +184,7 @@ class CommonTextFieldWithLabel extends StatelessWidget {
             ),
             prefixIcon: prefixIcon,
             filled: true,
-            fillColor: fillColor ?? const Color(0xffF7F7F7),
+            fillColor: Colors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 borderRadius ?? 8,

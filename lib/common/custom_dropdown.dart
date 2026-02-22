@@ -68,6 +68,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                   const Text(
                     '*',
                     style: TextStyle(
+                      color: Colors.red,
                       // color: AppColors.colorRed,
                       fontSize: 16,
                       fontFamily: 'Gilroy',
@@ -109,7 +110,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                           horizontal: 10,
                         ),
                         disabledDecoration: CustomDropdownDisabledDecoration(
-                          fillColor: fillColor ?? const Color(0xffF7F7F7),
+                          fillColor: Colors.white,
                           hintStyle: const TextStyle(
                             // color: AppColors.colortextDarkGrey,
                             // color: AppColors.colorhinttextGrey,
@@ -127,7 +128,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                           // fillColor: AppColors.colorWhite,
                           border: Border.all(
                             width: 1,
-                            // color: AppColors.colorTransparent
+                            color: Colors.grey.shade400,
                           ),
                         ),
                         decoration: CustomDropdownDecoration(
@@ -151,6 +152,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                           ),
                           closedBorder: Border.all(
                             width: 1,
+                            color: Colors.grey.shade400,
                             // color: AppColors.colorTransparent
                           ),
                           expandedBorderRadius: BorderRadius.circular(
@@ -181,7 +183,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                             height: 0.4,
                           ),
                           // expandedFillColor: AppColors.colorLightGrey,
-                          closedFillColor: fillColor ?? const Color(0xffF7F7F7),
+                          closedFillColor: Colors.white,
                           hintStyle: const TextStyle(
                             // color: AppColors.colortextGrey2,
                             //color: AppColors.colorhinttextGrey,
@@ -263,6 +265,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                       // fillColor: AppColors.colorWhite,
                       border: Border.all(
                         width: 1,
+                        color: Colors.grey.shade400,
                         // color: AppColors.colorTransparent
                       ),
                     ),
@@ -297,10 +300,12 @@ class CommonDropDownWithLabel extends StatelessWidget {
                       ),
                       closedErrorBorder: Border.all(
                         width: 1,
+                        color: Colors.grey.shade400,
                         // color: AppColors.colorRed
                       ),
                       closedBorder: Border.all(
                         width: 1,
+                        color: Colors.grey.shade400,
                         // color: AppColors.colorTransparent
                       ),
                       expandedBorderRadius: BorderRadius.circular(
@@ -332,7 +337,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                       ),
                       // expandedFillColor: AppColors.colorCardColor,
                       // expandedFillColor: AppColors.colorLightGrey,
-                      closedFillColor: fillColor ?? const Color(0xffF7F7F7),
+                      closedFillColor: Colors.white,
                       hintStyle: const TextStyle(
                         // color: AppColors.colortextGrey2,
                         //color: AppColors.colorhinttextGrey,

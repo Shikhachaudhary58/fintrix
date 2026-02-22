@@ -15,6 +15,7 @@ class AddressScreen extends StatelessWidget {
   AddressScreen({super.key});
 
   final AddressController controller = Get.put(AddressController());
+  // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,157 +46,199 @@ class AddressScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 child: GetBuilder<AddressController>(
                   builder: (_) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CommonDropDownWithLabel(
-                          items: const ["Residential", "Communication"],
-                          titleText: 'Select Type',
-                          labelText: 'Select here',
-                          onChanged: (value) {
-                            controller.updateType(value ?? '');
-                          },
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        /// Show fields when any type is selected
-                        if (controller.selectedType.isNotEmpty) ...[
-                          /// Dynamic Heading
-                          Text(
-                            controller.selectedType == "Residential"
-                                ? "Residential Address"
-                                : "Communication Address",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          /// Pincode
-                          CommonTextFieldWithLabel(
-                            //items: const [],
-                            titleText: 'Pincode',
-                            maxLength: 6,
-                            controller: controller.pinCodeController,
-                            labelText: 'Enter pincode',
-                            keyboardType: TextInputType.number,
+                    return Form(
+                      key: controller.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CommonDropDownWithLabel(
+                            isRequired: true,
+                            items: const ["Residential", "Communication"],
+                            titleText: 'Select Type',
+                            labelText: 'Select here',
                             onChanged: (value) {
-                              controller.fetchCityState(value);
+                              controller.updateType(value ?? '');
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty || value.trim().isEmpty) {
+                                return 'required';
+                              }
+                              return null;
                             },
                           ),
 
-                          // TextField(
-                          //   controller: controller.pinCodeController,
-                          //   keyboardType: TextInputType.number,
-                          //   maxLength: 6,
-                          //   decoration: InputDecoration(
-                          //     labelText: "Pincode",
-                          //     border: const OutlineInputBorder(),
-                          //     errorText: controller.pinError,
-                          //   ),
-                          // onChanged: (value) {
-                          //   controller.fetchCityState(value);
-                          // },
-                          // ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 20),
 
-                          /// State
-                          CommonTextFieldWithLabel(
-                            //items: const [],
-                            controller: controller.stateController,
-                            titleText: 'State',
-                            // maxLength: 6,
-                            // controller: quantityController,
-                            labelText: 'State',
-                          ),
-
-                          // TextField(
-                          //   controller: controller.stateController,
-                          //   readOnly: true,
-                          //   decoration: const InputDecoration(
-                          //     labelText: "State",
-                          //     border: OutlineInputBorder(),
-                          //   ),
-                          // ),
-                          const SizedBox(height: 16),
-
-                          /// City
-                          CommonTextFieldWithLabel(
-                            //items: const [],
-                            controller: controller.cityController,
-                            titleText: 'City',
-                            // maxLength: 6,
-                            // controller: quantityController,
-                            labelText: 'City',
-                          ),
-
-                          // TextField(
-                          //   controller: controller.cityController,
-                          //   readOnly: true,
-                          //   decoration: const InputDecoration(
-                          //     labelText: "City",
-                          //     border: OutlineInputBorder(),
-                          //   ),
-                          // ),
-                          const SizedBox(height: 16),
-
-                          /// Address Field (Dynamic Label)
-                          CommonTextFieldWithLabel(
-                            //items: const [],
-                            controller: controller.addressController,
-                            titleText: controller.selectedType == "Residential"
-                                ? "Residential Address"
-                                : "Communication Address",
-                            // maxLength: 6,
-                            // controller: quantityController,
-                            labelText: controller.selectedType == "Residential"
-                                ? "Residential Address"
-                                : "Communication Address",
-                            maxLength: 25,
-                          ),
-                          SizedBox(height: 16),
-                          Text('Availablity time (Optional)'),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: CommonTextFieldWithLabel(
-                                  isRequired: false,
-                                  //items: const [],
-                                  // controller: controller.stateController,
-                                  titleText: 'From',
-                                  // maxLength: 6,
-                                  // controller: quantityController,
-                                  labelText: 'From',
-                                ),
+                          /// Show fields when any type is selected
+                          if (controller.selectedType.isNotEmpty) ...[
+                            /// Dynamic Heading
+                            Text(
+                              controller.selectedType == "Residential"
+                                  ? "Residential Address"
+                                  : "Communication Address",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
+                            ),
 
-                              SizedBox(width: 10),
-                              Flexible(
-                                child: CommonTextFieldWithLabel(
-                                  isRequired: false,
-                                  //items: const [],
-                                  // controller: controller.cityController,
-                                  titleText: 'To',
-                                  // maxLength: 6,
-                                  // controller: quantityController,
-                                  labelText: 'To',
+                            const SizedBox(height: 16),
+
+                            /// Pincode
+                            CommonTextFieldWithLabel(
+                              //items: const [],
+                              titleText: 'Pincode',
+                              maxLength: 6,
+                              controller: controller.pinCodeController,
+                              labelText: 'Enter pincode',
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                controller.fetchCityState(value);
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value.trim().isEmpty) {
+                                  return 'required';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            // TextField(
+                            //   controller: controller.pinCodeController,
+                            //   keyboardType: TextInputType.number,
+                            //   maxLength: 6,
+                            //   decoration: InputDecoration(
+                            //     labelText: "Pincode",
+                            //     border: const OutlineInputBorder(),
+                            //     errorText: controller.pinError,
+                            //   ),
+                            // onChanged: (value) {
+                            //   controller.fetchCityState(value);
+                            // },
+                            // ),
+                            const SizedBox(height: 16),
+
+                            /// State
+                            CommonTextFieldWithLabel(
+                              //items: const [],
+                              controller: controller.stateController,
+                              titleText: 'State',
+                              // maxLength: 6,
+                              // controller: quantityController,
+                              labelText: 'State',
+                              validator: (value) {
+                                if (value!.isEmpty || value.trim().isEmpty) {
+                                  return 'required';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            // TextField(
+                            //   controller: controller.stateController,
+                            //   readOnly: true,
+                            //   decoration: const InputDecoration(
+                            //     labelText: "State",
+                            //     border: OutlineInputBorder(),
+                            //   ),
+                            // ),
+                            const SizedBox(height: 16),
+
+                            /// City
+                            CommonTextFieldWithLabel(
+                              //items: const [],
+                              controller: controller.cityController,
+                              titleText: 'City',
+                              // maxLength: 6,
+                              // controller: quantityController,
+                              labelText: 'City',
+                              validator: (value) {
+                                if (value!.isEmpty || value.trim().isEmpty) {
+                                  return 'required';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            // TextField(
+                            //   controller: controller.cityController,
+                            //   readOnly: true,
+                            //   decoration: const InputDecoration(
+                            //     labelText: "City",
+                            //     border: OutlineInputBorder(),
+                            //   ),
+                            // ),
+                            const SizedBox(height: 16),
+
+                            /// Address Field (Dynamic Label)
+                            CommonTextFieldWithLabel(
+                              //items: const [],
+                              controller: controller.addressController,
+                              titleText:
+                                  controller.selectedType == "Residential"
+                                  ? "Residential Address"
+                                  : "Communication Address",
+                              // maxLength: 6,
+                              // controller: quantityController,
+                              labelText:
+                                  controller.selectedType == "Residential"
+                                  ? "Residential Address"
+                                  : "Communication Address",
+                              maxLength: 25,
+                              validator: (value) {
+                                if (value!.isEmpty || value.trim().isEmpty) {
+                                  return 'required';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16),
+                            Text('Availablity time (Optional)'),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: CommonTextFieldWithLabel(
+                                    isRequired: false,
+                                    //items: const [],
+                                    // controller: controller.stateController,
+                                    titleText: 'From',
+                                    // maxLength: 6,
+                                    // controller: quantityController,
+                                    labelText: 'From',
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
 
-                          const SizedBox(height: 25),
-                          customButton(
-                            title: 'Next',
-                            onTap: () => Get.to(VoiceRecordingScreen()),
-                          ),
+                                SizedBox(width: 10),
+                                Flexible(
+                                  child: CommonTextFieldWithLabel(
+                                    isRequired: false,
+                                    //items: const [],
+                                    // controller: controller.cityController,
+                                    titleText: 'To',
+                                    // maxLength: 6,
+                                    // controller: quantityController,
+                                    labelText: 'To',
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 25),
+                            customButton(
+                              title: 'Next',
+                              onTap: () {
+                                if (controller.formKey.currentState!
+                                    .validate()) {
+                                  Get.to(VoiceRecordingScreen());
+                                }
+                              },
+                              // onTap: () => Get.to(VoiceRecordingScreen()),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     );
 
                     // Column(

@@ -10,6 +10,7 @@ class AddressController extends GetxController {
   final pinCodeController = TextEditingController();
   final stateController = TextEditingController();
   final cityController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? pinError; // 👈 add this
 

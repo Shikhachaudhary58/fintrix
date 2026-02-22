@@ -329,7 +329,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey.shade200,
+                    color: Colors.white,
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -353,7 +353,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: const Color(0xffF1F3F6),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -368,7 +368,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xffF1F3F6),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -477,7 +477,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
           const SizedBox(height: 10),
 
           FloatingActionButton(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blue.shade400,
             child: const Icon(Icons.comment),
             onPressed: () {
               setState(() {

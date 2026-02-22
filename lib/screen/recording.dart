@@ -453,7 +453,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xffF1F3F6),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -461,7 +461,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
         children: [
           Expanded(child: Text(message, style: const TextStyle(fontSize: 15))),
           IconButton(
-            icon: const Icon(Icons.edit, size: 20, color: Colors.green),
+            icon: Icon(Icons.edit, size: 20, color: Colors.blue.shade200),
             // onPressed: () {
             //   setState(() {
             //     _isEditing = true;
@@ -496,7 +496,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xffF1F3F6),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -507,7 +507,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
             icon: Icon(
               _isPlaying ? Icons.pause_circle : Icons.play_circle,
               size: 32,
-              color: Colors.green,
+              color: Colors.blue.shade200,
             ),
           ),
 
@@ -564,7 +564,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xffF1F3F6),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
@@ -572,12 +572,14 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
           Expanded(
             child: TextField(
               controller: _controller,
+
               onChanged: (val) {
                 setState(() {});
               },
               decoration: const InputDecoration(
                 hintText: "Type your query...",
                 border: InputBorder.none,
+                fillColor: Colors.white,
               ),
             ),
           ),
@@ -595,7 +597,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
               ? IconButton(
                   icon: Icon(
                     _isEditing ? Icons.check : Icons.send,
-                    color: Colors.green,
+                    color: Colors.blue.shade200,
                   ),
                   onPressed: () {
                     setState(() {
@@ -616,7 +618,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen>
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.mic,
-                      color: _isRecording ? Colors.red : Colors.green,
+                      color: _isRecording ? Colors.red : Colors.blue.shade200,
                     ),
                   ),
                 ),
