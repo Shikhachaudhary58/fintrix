@@ -14,6 +14,31 @@ class AddressController extends GetxController {
 
   String? pinError; // 👈 add this
 
+  String hoveredOption = '';
+
+  final fromTimeController = TextEditingController();
+  final toTimeController = TextEditingController();
+
+  String getFullAddress() {
+    return "${addressController.text}, "
+        "${cityController.text}, "
+        "${stateController.text} - "
+        "${pinCodeController.text}";
+  }
+
+  String getTime() {
+    if (fromTimeController.text.isNotEmpty &&
+        toTimeController.text.isNotEmpty) {
+      return "${fromTimeController.text} - ${toTimeController.text}";
+    }
+    return '';
+  }
+
+  void setHover(String value) {
+    hoveredOption = value;
+    update();
+  }
+
   void updateType(String value) {
     selectedType = value;
     update();

@@ -181,10 +181,12 @@
 // }
 
 import 'dart:io';
+import 'package:fintrix/screen/first_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fintrix/common/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:get/get.dart';
 
 class QueryDetailScreen extends StatefulWidget {
   final String? textMessage;
@@ -315,7 +317,20 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget('Query Details'),
+      appBar: appBarWidget(
+        'Query Details',
+        onBackTap: () {
+          Get.offAll(() => FirstScreen()); // 👈 go to start screen
+        },
+        //         onBackTap: () {
+        //   Get.defaultDialog(
+        //     title: "Exit",
+        //     middleText: "Go back to home?",
+        //     onConfirm: () => Get.offAll(() => FirstScreen()),
+        //     onCancel: () {},
+        //   );
+        // }
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(

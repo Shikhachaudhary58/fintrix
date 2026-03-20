@@ -6,8 +6,10 @@ appBarWidget(
   String title, {
   bool showBackButton = true,
   String? assetImagePath,
+
   // int? navKey,
   Widget? action,
+  VoidCallback? onBackTap,
 }) {
   // {String? assetImagePath, int? navKey, Widget? action}) {
   return AppBar(
@@ -25,8 +27,15 @@ appBarWidget(
               highlightColor: const Color.fromARGB(0, 112, 96, 96),
               splashColor: Colors.transparent,
               onTap: () {
-                Get.back();
+                if (onBackTap != null) {
+                  onBackTap(); // 🔥 custom back
+                } else {
+                  Get.back(); // 🔥 default back
+                }
               },
+              // onTap: () {
+              //   Get.back();
+              // },
               // child: Container(
               //   height: 20,
               //   width: 20,
