@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   saveName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("username", nameController.text);
+    await prefs.setString('phone', numberController.text);
   }
 
   @override

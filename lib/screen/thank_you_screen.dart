@@ -2,11 +2,11 @@ import 'package:fintrix/screen/query_detail.dart';
 import 'package:fintrix/screen/working_day.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ThankYouScreen extends StatelessWidget {
+class ThankYouScreen extends StatefulWidget {
   final String address;
   final String? time;
-  final dateRange = getWorkingDaysRange();
   final String? textMessage;
   final String? audioPath;
   final String? uploadedFilePath;
@@ -20,20 +20,53 @@ class ThankYouScreen extends StatelessWidget {
     this.uploadedFilePath,
   });
 
+  @override
+  State<ThankYouScreen> createState() => _ThankYouScreenState();
+}
+
+class _ThankYouScreenState extends State<ThankYouScreen> {
+  final dateRange = getWorkingDaysRange();
+
+  String phone = "";
+
+  getPhone() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      phone = prefs.getString("phone") ?? "User";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPhone();
+  }
+
   String getMessage() {
-    if (time != null && time!.isNotEmpty) {
+    if (widget.time != null && widget.time!.isNotEmpty) {
       return "Thank you for your response.\n\n"
-          "We are working on your query and will resolve it shortly. "
-          "Our banking team will contact you within 3 working days $dateRange.\n\n"
-          "Preferred Time: $time\n"
-          "Address: $address\n\n"
-          "We appreciate your time and patience.";
+          // "We are working on your query and will resolve it shortly. "
+          // "We are processing your query and our team will contact you at $phone "
+          // // "Our banking team will contact you on $phone within 3 working days $dateRange.\n\n"
+          // "Preferred Time: ${widget.time}\n"
+          // "Address: ${widget.address}\n\n"
+          // "We appreciate your time and patience.";
+          "We are processing your query and our team will contact you at $phone "
+          "within 3 working days ($dateRange).\n\n"
+          "Preferred Time: ${widget.time}\n"
+          "Address: ${widget.address}\n\n"
+          "We appreciate your patience.";
     } else {
       return "Thank you for your response.\n\n"
-          "We are working on your query and will resolve it shortly. "
-          "Our banking team will contact you within 3 working days.\n\n"
-          "Address: $address\n\n"
-          "We appreciate your time and patience.";
+          "We are processing your query and our team will contact you at $phone "
+          "within 3 working days ($dateRange).\n\n"
+          "Preferred Time: ${widget.time}\n"
+          "Address: ${widget.address}\n\n"
+          "We appreciate your patience.";
+      // "We are working on your query and will resolve it shortly. "
+      // "Our banking team will contact you within 3 working days.\n\n"
+      // "Address: ${widget.address}\n\n"
+      // "We appreciate your time and patience.";
     }
   }
 
@@ -103,9 +136,9 @@ class ThankYouScreen extends StatelessWidget {
                   onPressed: () {
                     Get.offAll(
                       () => QueryDetailScreen(
-                        textMessage: textMessage,
-                        audioPath: audioPath,
-                        uploadedFilePath: uploadedFilePath,
+                        textMessage: widget.textMessage,
+                        audioPath: widget.audioPath,
+                        uploadedFilePath: widget.uploadedFilePath,
                       ),
                     );
                     // Get.off(

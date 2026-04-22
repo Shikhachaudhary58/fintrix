@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-            Text("Hi $username"),
+            Text("Hi $username\n Do you have any query?"),
           ],
         ),
       ),

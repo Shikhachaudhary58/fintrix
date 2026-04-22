@@ -182,6 +182,7 @@
 
 import 'dart:io';
 import 'package:fintrix/screen/first_screen.dart';
+import 'package:fintrix/screen/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fintrix/common/appbar.dart';
 import 'package:flutter/material.dart';
@@ -320,7 +321,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
       appBar: appBarWidget(
         'Query Details',
         onBackTap: () {
-          Get.offAll(() => FirstScreen()); // 👈 go to start screen
+          Get.offAll(() => HomeScreen()); // 👈 go to start screen
         },
         //         onBackTap: () {
         //   Get.defaultDialog(
