@@ -229,11 +229,11 @@ class AddressScreen extends StatelessWidget {
                             customButton(
                               title: 'Next',
                               onTap: () {
-                                if (controller.formKey.currentState!
-                                    .validate()) {
-                                  Get.to(VoiceRecordingScreen());
-                                }
+                                // if (controller.formKey.currentState!
+                                //     .validate()) {
+                                Get.to(VoiceRecordingScreen());
                               },
+                              // },
                               // onTap: () => Get.to(VoiceRecordingScreen()),
                             ),
                           ],
