@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225077290621",
+    "project_id": "fintrix-project",
+    "storage_bucket": "fintrix-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225077290621:android:6e65b1ad0f05f813053314",
+        "android_client_info": {
+          "package_name": "com.example.fintrix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaHBszFTzNVt4KsX-vKqsadQ93IRJXfEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

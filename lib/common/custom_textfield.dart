@@ -19,6 +19,7 @@ class CommonTextFieldWithLabel extends StatelessWidget {
   EdgeInsetsGeometry? padding;
   TextEditingController? controller;
   void Function(String)? onChanged;
+  final FormFieldSetter<String>? onSaved;
   TextCapitalization? textCapitalization;
   double? borderRadius;
   // List<TextInputFormatter>? inputFormatters;
@@ -54,6 +55,7 @@ class CommonTextFieldWithLabel extends StatelessWidget {
     this.enabled,
     this.fieldKey,
     this.doNotcloseKeyOntapOutside,
+    this.onSaved,
     this.readOnly = false,
     this.hintColor = Colors.grey,
     this.isRequired = true,
@@ -117,6 +119,7 @@ class CommonTextFieldWithLabel extends StatelessWidget {
           readOnly: readOnly ?? false,
           textCapitalization: textCapitalization ?? TextCapitalization.none,
           onChanged: onChanged,
+          onSaved: onSaved,
           onTapOutside: (event) {
             (doNotcloseKeyOntapOutside ?? false)
                 ? null
