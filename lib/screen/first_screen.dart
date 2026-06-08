@@ -74,7 +74,8 @@ class _FirstScreenState extends State<FirstScreen> {
         backgroundColor: Colors.black,
         elevation: 4,
         shape: const CircleBorder(),
-        onPressed: () => Get.to(() => StepsScreen()),
+        onPressed: () {},
+        // => Get.to(() => StepsScreen()),
         child: const Icon(Icons.add, color: Colors.white),
       ),
 
