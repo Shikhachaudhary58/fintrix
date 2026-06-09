@@ -137,6 +137,7 @@ class StepsScreen extends StatefulWidget {
 class _StepsScreenState extends State<StepsScreen> {
   final PageController _controller = PageController();
   int currentIndex = 0;
+  final List<String> pageTitles = ["Discover", "Messaging", "Voice Recording"];
 
   void nextPage() {
     if (currentIndex == 2) {
@@ -157,10 +158,22 @@ class _StepsScreenState extends State<StepsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: Colors.deepPurple.shade50,
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Text(
+                pageTitles[currentIndex],
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey.shade600,
+                ),
+              ),
+            ),
+
             /// 🔹 PageView Section
             Expanded(
               child: PageView(
@@ -173,15 +186,23 @@ class _StepsScreenState extends State<StepsScreen> {
                 children: [
                   _buildPage(
                     "assets/lottie/location.json",
+
                     'First you have to add your location',
+                    'Add your location to get nearby help',
+                    Colors.deepPurple.shade400,
                   ),
                   _buildPage(
                     "assets/lottie/messaging.json",
                     'You can raise your query by typing',
+                    //  'You can raise your query by typing',
+                    "Send Your Queries Easily",
+                    Colors.deepPurpleAccent.shade400,
                   ),
                   _buildPage(
                     "assets/lottie/voicerecoed.json",
                     'You can raise your query by voice recording',
+                    "Speak Instead of Typing",
+                    Colors.orangeAccent.shade400,
                   ),
                 ],
               ),
@@ -199,7 +220,7 @@ class _StepsScreenState extends State<StepsScreen> {
                   width: currentIndex == index ? 25 : 10,
                   decoration: BoxDecoration(
                     color: currentIndex == index
-                        ? Colors.blue
+                        ? Colors.blueAccent.shade700
                         : Colors.grey.shade400,
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -239,27 +260,94 @@ class _StepsScreenState extends State<StepsScreen> {
     );
   }
 
-  Widget _buildPage(String asset, String text) {
+  Widget _buildPage(
+    String asset,
+    String text,
+    String title,
+    Color containerColor,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(flex: 5, child: Lottie.asset(asset)),
-          Gap(10),
-          Expanded(
-            flex: 1,
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontFamily: 'Gilroy',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
+          // Center(child: Text('Location')),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: 500,
+                height: 480,
+                decoration: BoxDecoration(
+                  // color: Colors.deepPurple.shade400,
+                  color: containerColor,
+                  borderRadius: BorderRadius.circular(80),
+                  // shape: BoxShape.circle,
+                ),
               ),
-            ),
+              Positioned(
+                top: -30,
+                left: 10,
+                right: 10,
+                child: Container(
+                  width: Get.width * 0.9,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple.shade50,
+                    borderRadius: BorderRadius.circular(80),
+                    // shape: BoxShape.circle,
+                  ),
+                  child: Lottie.asset(asset, fit: BoxFit.contain),
+                ),
+              ),
+              Positioned(
+                // top: 220,
+                bottom: 70,
+                left: 20,
+                right: 20,
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: 'Gilroy',
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Gap(20),
+                    Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: 'Gilroy',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
+          // Expanded(flex: 5, child: Lottie.asset(asset)),
+          // Gap(10),
+          // Expanded(
+          //   flex: 1,
+          //   child: Text(
+          //     text,
+          //     style: const TextStyle(
+          //       fontFamily: 'Gilroy',
+          //       fontSize: 14,
+          //       fontWeight: FontWeight.w600,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

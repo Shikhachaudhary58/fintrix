@@ -5,7 +5,7 @@ class AppTheme {
   static final darkThemeMode = ThemeData.dark();
   static final lightThemeMode = ThemeData().copyWith(
     primaryColor: Colors.black,
-    scaffoldBackgroundColor: Colors.blue.shade50,
+    scaffoldBackgroundColor: Colors.deepPurple.shade50,
     // colorScheme: ColorScheme.fromSwatch(
     //   primarySwatch: Colors.blue,
     //   accentColor: Colors.yellow,

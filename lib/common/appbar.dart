@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-appBarWidget(
+PreferredSizeWidget appBarWidget(
   String title, {
   bool showBackButton = true,
   String? assetImagePath,
@@ -13,8 +13,15 @@ appBarWidget(
 }) {
   // {String? assetImagePath, int? navKey, Widget? action}) {
   return AppBar(
-    backgroundColor: Colors.transparent,
-    forceMaterialTransparency: true,
+    toolbarHeight: 80,
+    backgroundColor: Colors.deepPurple.shade600,
+    // forceMaterialTransparency: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(30),
+        bottomRight: Radius.circular(30),
+      ),
+    ),
     leading: showBackButton
         ? Container(
             // margin: const EdgeInsets.all(10),
@@ -51,30 +58,36 @@ appBarWidget(
               // ),
               child: const Icon(
                 Icons.arrow_left,
-                color: Colors.black,
-                size: 35,
+                color: Colors.white,
+                size: 40,
               ),
             ),
           )
         : null,
     title: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.only(left: 5.0, right: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Flexible(
-            child: Text(
-              // 'Add Store',
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Gilroy',
-                // height: 0.05,
+            child: Container(
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(12),
+              //   color: Colors.deepPurple.shade600,
+              // ),
+              child: Text(
+                // 'Add Store',
+                title,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Gilroy',
+                  // height: 0.05,
+                ),
               ),
             ),
           ),

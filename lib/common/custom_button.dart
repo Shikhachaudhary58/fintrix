@@ -17,7 +17,7 @@ GestureDetector customButton({
       width: Get.width,
       height: hieght ?? 50,
       decoration: ShapeDecoration(
-        color: Colors.black,
+        color: Colors.deepPurple.shade500,
         // color: isDisabled
         //     ? AppColors.colorBlack.withOpacity(0.1)
         //     : bgColor ?? AppColors.colorBlack,

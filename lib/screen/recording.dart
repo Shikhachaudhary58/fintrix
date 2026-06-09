@@ -669,6 +669,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:fintrix/common/appbar.dart';
+import 'package:fintrix/common/custom_button.dart';
 import 'package:fintrix/common/upload_image.dart';
 import 'package:fintrix/screen/thank_you_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -892,7 +893,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
     return Scaffold(
       appBar: appBarWidget('Raise Query'),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Column(
           children: [
             /// Upload
@@ -923,33 +924,48 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
             const Spacer(),
 
             /// SUBMIT BUTTON
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+            ///
+            customButton(
+              title: 'Submit',
+              onTap: () {
+                Get.to(
+                  () => ThankYouScreen(
+                    address: data['address'] ?? '',
+                    time: data['time'] ?? '',
+                    textMessage: _textMessage,
+                    audioPath: _audioPath,
+                    uploadedFilePath: _uploadedFilePath,
                   ),
-                ),
-                onPressed: () {
-                  Get.to(
-                    () => ThankYouScreen(
-                      address: data['address'] ?? '',
-                      time: data['time'] ?? '',
-                      textMessage: _textMessage,
-                      audioPath: _audioPath,
-                      uploadedFilePath: _uploadedFilePath,
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Submit",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
+                );
+              },
             ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: 50,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.green,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(12),
+            //       ),
+            //     ),
+            //     onPressed: () {
+            // Get.to(
+            //   () => ThankYouScreen(
+            //     address: data['address'] ?? '',
+            //     time: data['time'] ?? '',
+            //     textMessage: _textMessage,
+            //     audioPath: _audioPath,
+            //     uploadedFilePath: _uploadedFilePath,
+            //   ),
+            // );
+            //     },
+            //     child: const Text(
+            //       "Submit",
+            //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
