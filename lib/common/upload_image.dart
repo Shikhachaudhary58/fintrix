@@ -840,9 +840,26 @@ class UploadDocWidget extends StatefulWidget {
 class _UploadDocWidgetState extends State<UploadDocWidget> {
   String? selectedPath;
 
-  Future<void> pickImage() async {
+  // Future<void> pickImage() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+  //   if (image != null) {
+  //     setState(() {
+  //       selectedPath = image.path;
+  //     });
+
+  //     widget.getUrl(image.path);
+  //   }
+  // }
+
+  Future<void> pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    final XFile? image = await picker.pickImage(
+      source: source,
+      imageQuality: 80,
+    );
 
     if (image != null) {
       setState(() {
@@ -853,47 +870,80 @@ class _UploadDocWidgetState extends State<UploadDocWidget> {
     }
   }
 
-  Future<void> pickPDF() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
+  // Future<void> pickPDF() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['pdf'],
+  //   );
 
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        selectedPath = result.files.single.path!;
-      });
+  //   if (result != null && result.files.single.path != null) {
+  //     setState(() {
+  //       selectedPath = result.files.single.path!;
+  //     });
 
-      widget.getUrl(result.files.single.path!);
-    }
-  }
+  //     widget.getUrl(result.files.single.path!);
+  //   }
+  // }
 
-  void showPickerOptions() {
+  // void showPickerOptions() {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (_) => SafeArea(
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           ListTile(
+  //             leading: const Icon(Icons.image),
+  //             title: const Text("Image"),
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //               pickImage();
+  //             },
+  //           ),
+  //           ListTile(
+  //             leading: const Icon(Icons.picture_as_pdf),
+  //             title: const Text("PDF"),
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //               pickPDF();
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  Future<void> showPickerOptions() async {
     showModalBottomSheet(
       context: context,
-      builder: (_) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.image),
-              title: const Text("Image"),
-              onTap: () {
-                Navigator.pop(context);
-                pickImage();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.picture_as_pdf),
-              title: const Text("PDF"),
-              onTap: () {
-                Navigator.pop(context);
-                pickPDF();
-              },
-            ),
-          ],
-        ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
+      builder: (_) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -918,20 +968,7 @@ class _UploadDocWidgetState extends State<UploadDocWidget> {
             ? Stack(
                 children: [
                   Center(
-                    child: selectedPath!.toLowerCase().endsWith('.pdf')
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.picture_as_pdf, size: 40),
-                              const SizedBox(height: 8),
-                              Text(
-                                selectedPath!.split('/').last,
-                                style: const TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          )
-                        : kIsWeb
+                    child: kIsWeb
                         ? Image.network(selectedPath!, fit: BoxFit.contain)
                         : Image.file(File(selectedPath!), fit: BoxFit.contain),
                   ),
@@ -960,6 +997,67 @@ class _UploadDocWidgetState extends State<UploadDocWidget> {
                 ),
               ),
       ),
+      //      Container(
+      //       width: widget.width ?? double.infinity,
+      //       height: widget.isSquareShape ? 120 : 150,
+      //       padding: const EdgeInsets.all(12),
+      //       child: selectedPath != null
+      //           ? Stack(
+      //               children: [
+      //                 Center(
+      //                   child: selectedPath!.toLowerCase().endsWith('.pdf')
+      //                       ? Center(
+      // child: kIsWeb
+      //     ? Image.network(
+      //         selectedPath!,
+      //         fit: BoxFit.contain,
+      //       )
+      //     : Image.file(
+      //         File(selectedPath!),
+      //         fit: BoxFit.contain,
+      //       ),
+      //                       )),
+      //                       // Column(
+      //                       //     mainAxisAlignment: MainAxisAlignment.center,
+      //                       //     children: [
+      //                       //       const Icon(Icons.picture_as_pdf, size: 40),
+      //                       //       const SizedBox(height: 8),
+      //                       //       Text(
+      //                       //         selectedPath!.split('/').last,
+      //                       //         style: const TextStyle(fontSize: 12),
+      //                       //         textAlign: TextAlign.center,
+      //                       //       ),
+      //                       //     ],
+      //                       //   )
+      //                       // : kIsWeb
+      //                       // ? Image.network(selectedPath!, fit: BoxFit.contain)
+      //                       // : Image.file(File(selectedPath!), fit: BoxFit.contain),
+
+      //                 Positioned(
+      //                   top: 0,
+      //                   right: 0,
+      //                   child: IconButton(
+      //                     icon: const Icon(Icons.delete, color: Colors.red),
+      //                     onPressed: resetFile,
+      //                   ),
+      //                 ),
+      //               ],
+      //             )
+      //           : InkWell(
+      //               onTap: showPickerOptions,
+      //               child: Column(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 children: [
+      //                   const Icon(Icons.cloud_upload, size: 35),
+      //                   const SizedBox(height: 8),
+      //                   Text(
+      //                     widget.title,
+      //                     style: const TextStyle(fontWeight: FontWeight.w600),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //     ),
     );
   }
 }

@@ -155,6 +155,10 @@ class _StepsScreenState extends State<StepsScreen> {
     Get.to(() => AddressScreen());
   }
 
+  void back() {
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,8 +166,17 @@ class _StepsScreenState extends State<StepsScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            Gap(10),
+            Text(
+              "You are just a few steps away from getting help",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.shade600,
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 pageTitles[currentIndex],
                 style: TextStyle(
@@ -234,10 +247,18 @@ class _StepsScreenState extends State<StepsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                mainAxisAlignment: currentIndex == 2
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: currentIndex == 2
+                //     ? MainAxisAlignment.end
+                //     : MainAxisAlignment.spaceBetween,
                 children: [
+                  if (currentIndex == 0 ||
+                      currentIndex == 1 ||
+                      currentIndex == 2)
+                    TextButton(
+                      onPressed: back,
+                      child: const Text("Back", style: TextStyle(fontSize: 16)),
+                    ), // Placeholder for alignment
                   /// Skip Button (only on first & second page)
                   if (currentIndex != 2)
                     TextButton(
@@ -255,7 +276,7 @@ class _StepsScreenState extends State<StepsScreen> {
 
             const SizedBox(height: 40),
           ],
-        ),
+        ).paddingSymmetric(vertical: 20),
       ),
     );
   }
