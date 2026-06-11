@@ -88,12 +88,12 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                       height: 90,
                       width: 90,
                       decoration: BoxDecoration(
-                        color: Colors.green.shade50,
+                        color: Colors.deepPurple.shade700,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.check_circle,
-                        color: Colors.green,
+                        color: Colors.white,
                         size: 60,
                       ),
                     ),
@@ -161,7 +161,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                     // Navigate to Track Query Screen
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.deepPurple.shade700,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -169,7 +169,11 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
 
                   child: const Text(
                     "Track Your Query",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 70, left: 20),
+                  padding: const EdgeInsets.only(top: 50, left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,119 +102,121 @@ class _HomeScreenState extends State<HomeScreen> {
               Positioned(
                 // top: 50,
                 top: 200,
-                bottom: -200, // Adjust this value for more/less overlap
+                bottom: 0, // Adjust this value for more/less overlap
                 left: 0,
                 right: 0,
-                child: Container(
-                  height: Get.height * 0.6,
-                  decoration: BoxDecoration(
-                    // color: Colors.deepPurple.shade700,
-                    color: Colors.deepPurple.shade50,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                child: SingleChildScrollView(
+                  child: Container(
+                    // height: Get.height * 0.6,
+                    decoration: BoxDecoration(
+                      // color: Colors.deepPurple.shade700,
+                      color: Colors.deepPurple.shade50,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
                     ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // boxShadow: [
+                            //   BoxShadow(color: Colors.black12, blurRadius: 10),
+                            // ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.asset(
+                              "assets/image/bank_image.png",
+                              // height: 250,
+                              // fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Gap(20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Quick Action',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'See All',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ).paddingSymmetric(horizontal: 10),
+                        Gap(10),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            detailContainer(
+                              context,
+                              "Transfer\nMoney",
+                              "assets/image/send.png",
+                            ),
+
+                            detailContainer(
+                              context,
+                              "Pay\nBills",
+                              "assets/image/receipt.png",
+                            ),
+
+                            detailContainer(
+                              context,
+                              "My\nCards",
+                              "assets/image/credit_card.png",
+                            ),
+
+                            detailContainer(
+                              context,
+                              "Loans",
+                              "assets/image/loan.png",
+                            ),
+                          ],
+                        ),
+                        Gap(20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Have a Query?",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            queryCard(context),
+                          ],
+                        ).paddingSymmetric(horizontal: 10),
+                        Gap(20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [virtualDebitCardBanner(context)],
+                        ).paddingSymmetric(horizontal: 10),
+                        // SizedBox(
+                        //   width: 250,
+                        //   child: Lottie.asset(
+                        //     'assets/lottie/waving_man.json', // apna lottie path yaha daalo
+                        //     fit: BoxFit.contain,
+                        //   ),
+                        // ),
+                        // Text("Hi $username\n Do you have any query?"),
+                      ],
+                    ).paddingSymmetric(horizontal: 10, vertical: 15),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          // boxShadow: [
-                          //   BoxShadow(color: Colors.black12, blurRadius: 10),
-                          // ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.asset(
-                            "assets/image/bank_image.png",
-                            // height: 250,
-                            // fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Gap(20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Quick Action',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'See All',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ).paddingSymmetric(horizontal: 10),
-                      Gap(10),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          detailContainer(
-                            context,
-                            "Transfer\nMoney",
-                            "assets/image/send.png",
-                          ),
-
-                          detailContainer(
-                            context,
-                            "Pay\nBills",
-                            "assets/image/receipt.png",
-                          ),
-
-                          detailContainer(
-                            context,
-                            "My\nCards",
-                            "assets/image/credit_card.png",
-                          ),
-
-                          detailContainer(
-                            context,
-                            "Loans",
-                            "assets/image/loan.png",
-                          ),
-                        ],
-                      ),
-                      Gap(20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Have a Query?",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          queryCard(context),
-                        ],
-                      ).paddingSymmetric(horizontal: 10),
-                      Gap(20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [virtualDebitCardBanner(context)],
-                      ).paddingSymmetric(horizontal: 10),
-                      // SizedBox(
-                      //   width: 250,
-                      //   child: Lottie.asset(
-                      //     'assets/lottie/waving_man.json', // apna lottie path yaha daalo
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
-                      // Text("Hi $username\n Do you have any query?"),
-                    ],
-                  ).paddingSymmetric(horizontal: 10, vertical: 15),
                 ),
               ),
             ],

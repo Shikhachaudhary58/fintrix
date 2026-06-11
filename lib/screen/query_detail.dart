@@ -293,7 +293,7 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
         children: [
           Icon(
             isActive ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isActive ? Colors.green : Colors.grey,
+            color: isActive ? Colors.deepPurple.shade500 : Colors.grey,
           ),
           const SizedBox(width: 10),
           Text(

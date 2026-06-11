@@ -928,15 +928,15 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
             customButton(
               title: 'Submit',
               onTap: () {
-                // Get.to(
-                //   () => ThankYouScreen(
-                //     address: data['address'] ?? '',
-                //     time: data['time'] ?? '',
-                //     textMessage: _textMessage,
-                //     audioPath: _audioPath,
-                //     uploadedFilePath: _uploadedFilePath,
-                //   ),
-                // );
+                Get.to(
+                  () => ThankYouScreen(
+                    address: data['address'] ?? '',
+                    time: data['time'] ?? '',
+                    textMessage: _textMessage,
+                    audioPath: _audioPath,
+                    uploadedFilePath: _uploadedFilePath,
+                  ),
+                );
               },
             ),
             // SizedBox(

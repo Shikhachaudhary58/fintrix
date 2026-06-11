@@ -2,6 +2,7 @@ import 'package:fintrix/common/appbar.dart';
 import 'package:fintrix/common/custom_button.dart';
 import 'package:fintrix/common/custom_dropdown.dart';
 import 'package:fintrix/common/custom_textfield.dart';
+import 'package:fintrix/common/custom_time_widget.dart';
 import 'package:fintrix/controller/address_controller.dart';
 import 'package:fintrix/screen/raise_query.dart';
 import 'package:fintrix/screen/recording.dart';
@@ -16,6 +17,7 @@ class AddressScreen extends StatelessWidget {
   AddressScreen({super.key});
 
   final AddressController controller = Get.put(AddressController());
+  String? formattedTime;
   // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -401,36 +403,72 @@ class AddressScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 16),
                             Text('Availablity time (Optional)'),
-                            SizedBox(height: 10),
+                            // SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: CommonTextFieldWithLabel(
-                                    controller: controller.fromTimeController,
+                                  child: CustomTimeWidget(
+                                    fillColor: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                     isRequired: false,
-                                    //items: const [],
-                                    // controller: controller.stateController,
-                                    titleText: 'From',
-                                    // maxLength: 6,
-                                    // controller: quantityController,
-                                    labelText: 'From',
+                                    use24HourFormat: false,
+                                    controller: controller.fromTimeController,
+                                    context: context,
+                                    title: "From",
+                                    hint: "Select time",
+                                    onTimeSelected: (time) {
+                                      // print('Time selected: ${time.format(context)}');
+                                      formattedTime = time.formatToHMS();
+                                      // print('Time formated: $formattedTime');
+                                    },
                                   ),
                                 ),
 
+                                // Flexible(
+                                //   child: CommonTextFieldWithLabel(
+                                //     controller: controller.fromTimeController,
+                                //     isRequired: false,
+                                //     //items: const [],
+                                //     // controller: controller.stateController,
+                                //     titleText: 'From',
+                                //     // maxLength: 6,
+                                //     // controller: quantityController,
+                                //     labelText: 'From',
+                                //   ),
+                                // ),
                                 SizedBox(width: 10),
                                 Flexible(
-                                  child: CommonTextFieldWithLabel(
-                                    controller: controller.toTimeController,
+                                  child: CustomTimeWidget(
+                                    fillColor: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                     isRequired: false,
-                                    //items: const [],
-                                    // controller: controller.cityController,
-                                    titleText: 'To',
-                                    // maxLength: 6,
-                                    // controller: quantityController,
-                                    labelText: 'To',
+                                    use24HourFormat: false,
+                                    controller: controller.toTimeController,
+                                    context: context,
+                                    title: "To",
+                                    hint: "Select time",
+                                    onTimeSelected: (time) {
+                                      // print('Time selected: ${time.format(context)}');
+                                      formattedTime = time.formatToHMS();
+                                      // print('Time formated: $formattedTime');
+                                    },
                                   ),
                                 ),
+                                // Flexible(
+                                //   child: CommonTextFieldWithLabel(
+                                //     controller: controller.toTimeController,
+                                //     isRequired: false,
+                                //     //items: const [],
+                                //     // controller: controller.cityController,
+                                //     titleText: 'To',
+                                //     // maxLength: 6,
+                                //     // controller: quantityController,
+                                //     labelText: 'To',
+                                //   ),
+                                // ),
                               ],
                             ),
 
@@ -695,5 +733,13 @@ class AddressScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+extension TimeOfDayExtension on TimeOfDay {
+  String formatToHMS() {
+    final hourStr = hour.toString().padLeft(2, '0');
+    final minuteStr = minute.toString().padLeft(2, '0');
+    return "$hourStr:$minuteStr:00";
   }
 }
