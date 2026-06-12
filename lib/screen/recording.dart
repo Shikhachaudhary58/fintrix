@@ -670,10 +670,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:fintrix/common/appbar.dart';
 import 'package:fintrix/common/custom_button.dart';
+import 'package:fintrix/common/custom_dropdown.dart';
+import 'package:fintrix/common/custom_textfield.dart';
 import 'package:fintrix/common/upload_image.dart';
 import 'package:fintrix/screen/thank_you_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -693,6 +696,8 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
   bool _hasRecording = false; // 👈 ADD THIS
 
   final TextEditingController _controller = TextEditingController();
+  TextEditingController queryController = TextEditingController();
+  TextEditingController subjectController = TextEditingController();
 
   String? _textMessage;
   String? _audioPath;
@@ -701,6 +706,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
   bool _isRecording = false;
   bool _isPlaying = false;
   bool _isEditing = false;
+  String? selectedQueryType;
 
   int _seconds = 0;
   Timer? _timer;
@@ -892,81 +898,162 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget('Raise Query'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-        child: Column(
-          children: [
-            /// Upload
-            UploadDocWidget(
-              title: "Upload Document",
-              getUrl: (value) {
-                _uploadedFilePath = value;
-              },
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonDropDownWithLabel(
+                isRequired: false,
+                items: const [
+                  "Savings Account",
+                  "Current Account",
+                  "Debit Card Services",
+                  "Credit Card Services",
+                  "UPI Services",
+                  "Fund Transfer (NEFT/RTGS/IMPS)",
+                  "Loan Services",
+                  "Fixed Deposit / Recurring Deposit",
+                  "Internet Banking",
+                  "Mobile Banking",
+                  "KYC & Profile Update",
+                  "Cheque & Passbook Services",
+                  "ATM Services",
+                  "Transaction Dispute",
+                  "Charges & Penalties",
+                  "Fraud Reporting",
+                  "Service Request",
+                  "Complaint & Grievance",
+                  "Feedback & Suggestions",
+                  "Others",
+                ],
+                titleText: 'Query type',
+                labelText: 'Select query Type',
+                onChanged: (value) {
+                  setState(() {
+                    selectedQueryType = value;
+                  });
+                  // controller.updateType(value ?? '');
+                },
+                validator: (value) {
+                  if (value!.isEmpty || value.trim().isEmpty) {
+                    return 'required';
+                  }
+                  return null;
+                },
+              ),
+              Gap(20),
 
-            const SizedBox(height: 30),
+              CommonTextFieldWithLabel(
+                isRequired: false,
+                //items: const [],
+                titleText: 'Subject',
+                maxLength: 100,
+                controller: subjectController,
+                labelText: 'Enter query subject',
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  // controller.fetchCityState(value);
+                },
+                validator: (value) {
+                  if (value!.isEmpty || value.trim().isEmpty) {
+                    return 'required';
+                  }
+                  return null;
+                },
+              ),
+              Gap(20),
 
-            /// MESSAGE AREA
-            if (_isEditing)
-              _buildInputCard()
-            else if (_textMessage != null)
-              _buildMessageCard(_textMessage!)
-            else if (_audioPath != null)
-              _buildVoiceCard()
-            else
-              _buildInputCard(),
+              /// MESSAGE AREA
+              Text(
+                'Describe your issue/query',
+                style: TextStyle(
+                  // color: AppColors.colortextDarkGrey,
+                  // color: AppColors.colorBlack,
+                  // color: AppColors.colortextGrey2,
+                  fontSize: 14,
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Gap(5),
+              if (_isEditing)
+                _buildInputCard()
+              else if (_textMessage != null)
+                _buildMessageCard(_textMessage!)
+              else if (_audioPath != null)
+                _buildVoiceCard()
+              else
+                _buildInputCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            /// RECORDING TIMER
-            if (_isRecording) _buildRecordingIndicator(),
+              /// RECORDING TIMER
+              if (_isRecording) _buildRecordingIndicator(),
 
-            const Spacer(),
+              Gap(20),
 
-            /// SUBMIT BUTTON
-            ///
-            customButton(
-              title: 'Submit',
-              onTap: () {
-                Get.to(
-                  () => ThankYouScreen(
-                    address: data['address'] ?? '',
-                    time: data['time'] ?? '',
-                    textMessage: _textMessage,
-                    audioPath: _audioPath,
-                    uploadedFilePath: _uploadedFilePath,
-                  ),
-                );
-              },
-            ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   height: 50,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.green,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12),
-            //       ),
-            //     ),
-            //     onPressed: () {
-            // Get.to(
-            //   () => ThankYouScreen(
-            //     address: data['address'] ?? '',
-            //     time: data['time'] ?? '',
-            //     textMessage: _textMessage,
-            //     audioPath: _audioPath,
-            //     uploadedFilePath: _uploadedFilePath,
-            //   ),
-            // );
-            //     },
-            //     child: const Text(
-            //       "Submit",
-            //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            //     ),
-            //   ),
-            // ),
-          ],
+              /// Upload
+              UploadDocWidget(
+                title: "Upload Document",
+                getUrl: (value) {
+                  _uploadedFilePath = value;
+                },
+              ),
+
+              const SizedBox(height: 30),
+
+              // const Spacer(),
+              Gap(50),
+
+              /// SUBMIT BUTTON
+              ///
+              customButton(
+                title: 'Submit',
+                onTap: () {
+                  Get.to(
+                    () => ThankYouScreen(
+                      address: data['address'] ?? '',
+                      time: data['time'] ?? '',
+                      textMessage: _textMessage,
+                      audioPath: _audioPath,
+                      uploadedFilePath: _uploadedFilePath,
+                      queryType: selectedQueryType,
+                      subject: subjectController.text,
+                    ),
+                  );
+                },
+              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 50,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: Colors.green,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     ),
+              //     onPressed: () {
+              // Get.to(
+              //   () => ThankYouScreen(
+              //     address: data['address'] ?? '',
+              //     time: data['time'] ?? '',
+              //     textMessage: _textMessage,
+              //     audioPath: _audioPath,
+              //     uploadedFilePath: _uploadedFilePath,
+              //   ),
+              // );
+              //     },
+              //     child: const Text(
+              //       "Submit",
+              //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -978,7 +1065,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -1003,7 +1090,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -1034,7 +1121,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -1044,6 +1131,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
               onChanged: (_) => setState(() {}),
               decoration: const InputDecoration(
                 hintText: "Type your query...",
+                hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
               ),
             ),
@@ -1092,7 +1180,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.red.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

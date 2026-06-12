@@ -10,6 +10,8 @@ class ThankYouScreen extends StatefulWidget {
   final String? textMessage;
   final String? audioPath;
   final String? uploadedFilePath;
+  final String? queryType;
+  final String? subject;
 
   ThankYouScreen({
     super.key,
@@ -18,6 +20,8 @@ class ThankYouScreen extends StatefulWidget {
     this.textMessage,
     this.audioPath,
     this.uploadedFilePath,
+    this.queryType,
+    this.subject,
   });
 
   @override
@@ -136,6 +140,8 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                   onPressed: () {
                     Get.offAll(
                       () => QueryDetailScreen(
+                        queryType: widget.queryType,
+                        subject: widget.subject,
                         textMessage: widget.textMessage,
                         audioPath: widget.audioPath,
                         uploadedFilePath: widget.uploadedFilePath,

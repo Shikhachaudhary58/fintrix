@@ -176,11 +176,11 @@ class _StepsScreenState extends State<StepsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 pageTitles[currentIndex],
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.blueGrey.shade600,
                 ),
@@ -220,6 +220,7 @@ class _StepsScreenState extends State<StepsScreen> {
                 ],
               ),
             ),
+            Gap(10),
 
             /// 🔹 Animated Dot Indicator
             Row(
@@ -228,7 +229,10 @@ class _StepsScreenState extends State<StepsScreen> {
                 3,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 8,
+                  ),
                   height: 10,
                   width: currentIndex == index ? 25 : 10,
                   decoration: BoxDecoration(
@@ -241,7 +245,7 @@ class _StepsScreenState extends State<StepsScreen> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             /// 🔹 Buttons Section
             Padding(
@@ -298,8 +302,10 @@ class _StepsScreenState extends State<StepsScreen> {
             clipBehavior: Clip.none,
             children: [
               Container(
-                width: 500,
-                height: 480,
+                // width: 500,
+                // height: 480,
+                width: Get.width * 0.9,
+                height: Get.height * 0.55,
                 decoration: BoxDecoration(
                   // color: Colors.deepPurple.shade400,
                   color: containerColor,
@@ -311,9 +317,10 @@ class _StepsScreenState extends State<StepsScreen> {
                 top: -30,
                 left: 10,
                 right: 10,
+                // bottom: 0,
                 child: Container(
                   width: Get.width * 0.9,
-                  height: 250,
+                  height: Get.height * 0.3,
                   decoration: BoxDecoration(
                     color: Colors.deepPurple.shade50,
                     borderRadius: BorderRadius.circular(80),

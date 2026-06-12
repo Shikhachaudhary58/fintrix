@@ -1,5 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class CommonDropDownWithLabel extends StatelessWidget {
   Widget? suffixIcon;
@@ -20,11 +21,13 @@ class CommonDropDownWithLabel extends StatelessWidget {
   Color? fillColor;
   bool isRequired;
   Key? fieldKey;
+  final String? value;
   final ValueNotifier<String?>? selectedValueNotifier;
 
   CommonDropDownWithLabel({
     super.key,
     this.labelText,
+    this.value,
     this.titleText,
     this.enabled,
     this.initialValue,
@@ -77,7 +80,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                     ),
                   ),
               ],
-            ),
+            ).paddingOnly(bottom: 5),
             // .paddingOnly(left: 5, bottom: 2),
             items.length < 10
                 ? ValueListenableBuilder<String?>(
@@ -91,9 +94,11 @@ class CommonDropDownWithLabel extends StatelessWidget {
                         // initialItem: controller?.text.isNotEmpty == true
                         //     ? controller?.text
                         //     : null,
-                        initialItem: items.contains(controller?.text)
-                            ? controller?.text
-                            : null, // Ensure initialItem matches items
+                        initialItem:
+                            value ??
+                            (items.contains(controller?.text)
+                                ? controller?.text
+                                : null), // Ensure initialItem matches items
 
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -115,6 +120,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                             // color: AppColors.colortextDarkGrey,
                             // color: AppColors.colorhinttextGrey,
                             fontSize: 14,
+                            color: Colors.grey,
                             fontFamily: 'Gilroy',
                             fontWeight: FontWeight.w400,
                           ),
@@ -140,6 +146,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                             hintStyle: TextStyle(
+                              color: Colors.grey,
                               // color: AppColors.colortextDarkGrey,
                               fontSize: 14,
                               fontFamily: 'Gilroy',
@@ -185,6 +192,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                           // expandedFillColor: AppColors.colorLightGrey,
                           closedFillColor: Colors.white,
                           hintStyle: const TextStyle(
+                            color: Colors.grey,
                             // color: AppColors.colortextGrey2,
                             //color: AppColors.colorhinttextGrey,
                             fontSize: 12,
@@ -232,9 +240,11 @@ class CommonDropDownWithLabel extends StatelessWidget {
                     // initialItem: controller?.text.isNotEmpty == true
                     //     ? controller?.text
                     //     : null,
-                    initialItem: items.contains(controller?.text)
-                        ? controller?.text
-                        : null, // Ensure initialItem matches items
+                    initialItem:
+                        value ??
+                        (items.contains(controller?.text)
+                            ? controller?.text
+                            : null), // Ensure initialItem matches items
 
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -249,6 +259,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                     disabledDecoration: CustomDropdownDisabledDecoration(
                       fillColor: fillColor,
                       hintStyle: const TextStyle(
+                        color: Colors.grey,
                         // color: AppColors.colortextDarkGrey,
                         // color: AppColors.colorhinttextGrey,
                         fontSize: 14,
@@ -256,6 +267,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                       headerStyle: const TextStyle(
+                        color: Colors.grey,
                         // color: AppColors.colorBlack,
                         // color: AppColors.colorhinttextGrey,
                         fontSize: 14,
@@ -292,6 +304,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                         hintStyle: TextStyle(
+                          color: Colors.grey,
                           // color: AppColors.colortextDarkGrey,
                           fontSize: 14,
                           fontFamily: 'Gilroy',
@@ -339,6 +352,7 @@ class CommonDropDownWithLabel extends StatelessWidget {
                       // expandedFillColor: AppColors.colorLightGrey,
                       closedFillColor: Colors.white,
                       hintStyle: const TextStyle(
+                        color: Colors.grey,
                         // color: AppColors.colortextGrey2,
                         //color: AppColors.colorhinttextGrey,
                         fontSize: 12,

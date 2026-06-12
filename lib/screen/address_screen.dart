@@ -197,6 +197,7 @@ class AddressScreen extends StatelessWidget {
                           if (controller.selectedType.isNotEmpty) ...[
                             CommonDropDownWithLabel(
                               isRequired: true,
+                              value: controller.selectedType,
                               items: const ["Residential", "Communication"],
                               titleText: 'Selected Address Type',
                               labelText: controller.selectedType,
@@ -402,7 +403,17 @@ class AddressScreen extends StatelessWidget {
                               },
                             ),
                             SizedBox(height: 16),
-                            Text('Availablity time (Optional)'),
+                            Text(
+                              'Availablity time (Optional)',
+                              style: TextStyle(
+                                // color: AppColors.colortextDarkGrey,
+                                // color: AppColors.colorBlack,
+                                // color: AppColors.colortextGrey2,
+                                fontSize: 14,
+                                fontFamily: 'Gilroy',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ).paddingSymmetric(horizontal: 2),
                             // SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

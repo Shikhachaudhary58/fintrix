@@ -123,7 +123,7 @@ class _CustomTimeWidgetState extends State<CustomTimeWidget> {
                 ),
               ),
           ],
-        ).paddingOnly(left: 5, bottom: 2),
+        ).paddingOnly(left: 0, bottom: 2),
         Center(
           child: InkWell(
             onTap: () => _selectTime(widget.context, widget.controller),

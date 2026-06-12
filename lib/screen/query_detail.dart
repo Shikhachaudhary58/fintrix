@@ -181,21 +181,28 @@
 // }
 
 import 'dart:io';
+import 'package:fintrix/common/full_screen_image.dart';
 import 'package:fintrix/screen/first_screen.dart';
 import 'package:fintrix/screen/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fintrix/common/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class QueryDetailScreen extends StatefulWidget {
+  final String? queryType;
+  final String? subject;
   final String? textMessage;
   final String? audioPath;
   final String? uploadedFilePath;
 
   const QueryDetailScreen({
     super.key,
+    this.queryType,
+    this.subject,
+
     this.textMessage,
     this.audioPath,
     this.uploadedFilePath,
@@ -338,47 +345,157 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Text(widget.subject ?? ''),
+              Gap(10),
               // ===== FILE PREVIEW =====
               if (widget.uploadedFilePath != null)
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: kIsWeb
-                        ? Image.network(
-                            widget.uploadedFilePath!,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.file(
-                            File(widget.uploadedFilePath!),
-                            fit: BoxFit.cover,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Query Document',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
-                  ),
+                        ),
+                        Gap(5),
+                        Container(
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(
+                                () => FullScreenImageView(
+                                  imageUrl: widget.uploadedFilePath!,
+                                  // navKey: 0,
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: kIsWeb
+                                  ? Image.network(
+                                      widget.uploadedFilePath!,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.file(
+                                      File(widget.uploadedFilePath!),
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
               const SizedBox(height: 20),
+
+              if (widget.queryType != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Query Type',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(5),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 14,
+                      ),
+                      child: Text(
+                        widget.queryType ?? '',
+                        style: const TextStyle(fontSize: 15),
+                        // style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+
+              // Text(widget.queryType ?? ''),
+              Gap(10),
+
+              if (widget.subject != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Subject',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(5),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 14,
+                      ),
+                      child: Text(
+                        widget.subject ?? '',
+                        style: const TextStyle(fontSize: 15),
+                        // style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              Gap(10),
 
               // ===== USER TEXT MESSAGE =====
               if (widget.textMessage != null)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    widget.textMessage!,
-                    style: const TextStyle(fontSize: 15),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Query Description',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(5),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        widget.textMessage ?? '',
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ],
                 ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
               if (widget.audioPath != null)
                 Container(
@@ -402,8 +519,11 @@ class _QueryDetailScreenState extends State<QueryDetailScreen> {
                   ),
                 ),
 
+              Gap(10),
+
               // ===== RESOLUTION MESSAGE =====
               Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
                   color: Colors.blue.shade50,

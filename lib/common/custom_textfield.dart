@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class CommonTextFieldWithLabel extends StatelessWidget {
   bool? obscureText;
@@ -106,7 +107,7 @@ class CommonTextFieldWithLabel extends StatelessWidget {
                 ),
               ),
           ],
-        ),
+        ).paddingOnly(bottom: 5),
         // .paddingOnly(left: 5, bottom: 2),
         TextFormField(
           minLines: isDoubleHeight ? 2 : 1,
