@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isPasswordVisible = false;
 
   saveName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -114,10 +115,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 // ),
                 Gap(10),
                 CommonTextFieldWithLabel(
-                  obscureText: true,
+                  obscureText: !isPasswordVisible,
                   labelText: 'Enter Password',
                   titleText: 'Password',
                   controller: passwordController,
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },
+                    child: Icon(
+                      isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                  ),
                 ),
                 Gap(50),
                 customButton(
