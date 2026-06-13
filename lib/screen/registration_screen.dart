@@ -106,8 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Gap(10),
                   CommonTextFieldWithLabel(
-                    labelText: 'Enter Registered Number',
-                    titleText: 'Enter Your Number',
+                    labelText: 'Enter Number',
+                    titleText: 'Enter Registered Number',
                     controller: numberController,
                   ),
                   // TextField(
