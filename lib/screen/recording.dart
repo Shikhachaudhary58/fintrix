@@ -897,6 +897,7 @@ class _VoiceRecordingScreenState extends State<VoiceRecordingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: appBarWidget('Raise Query'),
       body: SingleChildScrollView(
         child: Padding(

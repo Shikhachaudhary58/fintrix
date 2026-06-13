@@ -18,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   saveName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,6 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Column(
         children: [
           Stack(
@@ -102,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Gap(10),
                 CommonTextFieldWithLabel(
-                  labelText: 'Enter Number',
+                  labelText: 'Enter Registered Number',
                   titleText: 'Enter Your Number',
                   controller: numberController,
                 ),
@@ -110,6 +112,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 //   controller: nameController,
                 //   decoration: InputDecoration(labelText: "Enter Name"),
                 // ),
+                Gap(10),
+                CommonTextFieldWithLabel(
+                  obscureText: true,
+                  labelText: 'Enter Password',
+                  titleText: 'Password',
+                  controller: passwordController,
+                ),
                 Gap(50),
                 customButton(
                   bgColor: Colors.purple,

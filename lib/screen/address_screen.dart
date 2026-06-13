@@ -23,6 +23,7 @@ class AddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       // resizeToAvoidBottomInset: kIsWeb ? false : true,
       appBar: appBarWidget('Address'),
       body: LayoutBuilder(
